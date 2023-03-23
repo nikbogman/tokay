@@ -2,11 +2,13 @@ package app
 
 import (
 	"context"
+	configs "tokay/configs"
 
 	"github.com/redis/go-redis/v9"
 )
 
 var ctx = context.Background()
+var store = ConnectCacheStorage(&configs.RedisOptions)
 
 type CacheStorage struct {
 	connection *redis.Client
@@ -18,18 +20,17 @@ func ConnectCacheStorage(options *redis.Options) *CacheStorage {
 }
 
 func (cache *CacheStorage) DisconnectCacheStorage() error {
-	err := cache.connection.Close()
-	if err != nil {
-		return err
-	}
-	return nil
+	return cache.connection.Close()
 }
 
 func (cache *CacheStorage) IsBlacklisted(key, token string) (bool, error) {
-	return false, nil
+	ismember, err := cache.connection.SIsMember(ctx, key, token).Result()
+	if !ismember || err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
-
-func (cache *CacheStorage) Backlist(key, token string) error {
-	return nil
+func (cache *CacheStorage) Blacklist(key, token string) error {
+	return cache.connection.SAdd(ctx, key, token).Err()
 }
