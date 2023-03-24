@@ -1,14 +1,14 @@
-package app
+package internal
 
 import (
 	"context"
-	configs "tokay/configs"
+	"tokay/configs"
 
 	"github.com/redis/go-redis/v9"
 )
 
-var ctx = context.Background()
 var store = ConnectCacheStorage(&configs.RedisOptions)
+var ctx = context.Background()
 
 type CacheStorage struct {
 	connection *redis.Client

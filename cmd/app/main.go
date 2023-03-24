@@ -2,8 +2,8 @@ package main
 
 import (
 	"net/http"
-	"tokay/app"
 	"tokay/configs"
+	app "tokay/internal"
 )
 
 func main() {

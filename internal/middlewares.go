@@ -1,4 +1,4 @@
-package app
+package internal
 
 import (
 	"context"
@@ -29,7 +29,6 @@ func (verifier *Verifier) VerifyToken(next http.Handler) http.Handler {
 			http.Error(res, "Could not find Bearer token in Authorization header", http.StatusForbidden)
 			return
 		}
-
 		claims, err := DecodeToken(token, verifier.secret)
 		if err != nil {
 			http.Error(res, err.Error(), http.StatusUnauthorized)

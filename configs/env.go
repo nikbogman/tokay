@@ -20,6 +20,7 @@ type envVars struct {
 	REFRESH_TOKEN_SECRET   string `mapstructure:"REFRESH_TOKEN_SECRET"`
 	REFRESH_TOKEN_LIFETIME string `mapstructure:"REFRESH_TOKEN_LIFETIME"`
 	REDIS_ADDRESS          string `mapstructure:"REDIS_ADDRESS"`
+	REDIS_PASSWORD         string `mapstructure:"REDIS_PASSWORD"`
 	PORT                   string `mapstructure:"PORT"`
 }
 

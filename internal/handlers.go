@@ -1,4 +1,4 @@
-package app
+package internal
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"tokay/configs"
 )
 
-func GenerateTokens(res http.ResponseWriter, req *http.Request) {
+func generateTokens(res http.ResponseWriter, req *http.Request) {
 	subject := req.URL.Query().Get("sub")
 	if subject == "" {
 		http.Error(res, "Missing sub as query parameter", http.StatusBadRequest)
@@ -36,7 +36,7 @@ func GenerateTokens(res http.ResponseWriter, req *http.Request) {
 	})
 }
 
-func BlacklistToken(res http.ResponseWriter, req *http.Request) {
+func blacklistToken(res http.ResponseWriter, req *http.Request) {
 	ctx := req.Context()
 	subject, exists := ctx.Value("subject").(string)
 	if !exists {
@@ -57,7 +57,7 @@ func BlacklistToken(res http.ResponseWriter, req *http.Request) {
 	res.Write([]byte("ok"))
 }
 
-func CheckBlacklist(res http.ResponseWriter, req *http.Request) {
+func checkBlacklist(res http.ResponseWriter, req *http.Request) {
 	ctx := req.Context()
 	subject, exists := ctx.Value("subject").(string)
 	if !exists {
